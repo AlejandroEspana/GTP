@@ -1,0 +1,101 @@
+:root {
+  --primary-color: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #475569;
+  --surface-color: #ffffff;
+  --bg-color: #f8fafc;
+  --border-color: #e2e8f0;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: #1e293b;
+  margin: 0;
+  padding: 0;
+}
+
+/* Card customizations */
+.card {
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.card-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  font-weight: 600;
+}
+
+/* Badges */
+.badge {
+  font-weight: 500;
+  padding: 0.4em 0.7em;
+  border-radius: 6px;
+}
+
+/* Kanban column styling */
+.kanban-col {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  min-height: 450px;
+  padding: 12px;
+}
+
+.kanban-card {
+  cursor: pointer;
+  border-left: 4px solid var(--primary-color);
+  background-color: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Custom Nav tabs */
+.nav-tabs .nav-link {
+  color: #64748b;
+  font-weight: 500;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--primary-color);
+  border: none;
+  border-bottom: 2px solid var(--primary-color);
+  font-weight: 600;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  border-left: 2px solid #cbd5e1;
+  margin-left: 15px;
+  padding-left: 20px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  border: 2px solid white;
+}
