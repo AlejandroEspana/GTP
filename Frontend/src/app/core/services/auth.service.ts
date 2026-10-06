@@ -8,7 +8,7 @@ import { AuthResponse, RolUsuario } from '../models/models';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = '/api/auth';
+  private apiUrl = 'http://localhost:8080/api/auth';
   
   // Angular signals for reactive state
   currentUser = signal<AuthResponse | null>(this.getStoredUser());
@@ -17,6 +17,16 @@ export class AuthService {
 
   login(correo: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { correo, password }).pipe(
+      tap(res => {
+        localStorage.setItem('auth_token', res.token);
+        localStorage.setItem('auth_user', JSON.stringify(res));
+        this.currentUser.set(res);
+      })
+    );
+  }
+
+  register(userData: any): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/registro`, userData).pipe(
       tap(res => {
         localStorage.setItem('auth_token', res.token);
         localStorage.setItem('auth_user', JSON.stringify(res));

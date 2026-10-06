@@ -12,7 +12,7 @@ import {
   providedIn: 'root'
 })
 export class ProyectoService {
-  private apiUrl = '/api/proyectos';
+  private apiUrl = 'http://localhost:8080/api/proyectos';
 
   constructor(private http: HttpClient) {}
 

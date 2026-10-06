@@ -67,6 +67,10 @@ public class AuthService {
 
     @Transactional
     public AuthResponse registrar(RegistroUsuarioRequest request, HttpServletRequest httpRequest) {
+        if (request.rol() == com.laboratorio.proyectos.domain.RolUsuario.COORDINADOR || request.rol() == com.laboratorio.proyectos.domain.RolUsuario.ASESOR) {
+            throw new BadRequestException("Solo se permite el registro p\u00fablico de estudiantes. Los asesores y coordinadores deben ser asignados por administraci\u00f3n.");
+        }
+        
         String correoLimpio = request.correo().trim().toLowerCase();
         if (usuarioRepository.existsByCorreo(correoLimpio)) {
             throw new BadRequestException("El correo ya está registrado en la plataforma");

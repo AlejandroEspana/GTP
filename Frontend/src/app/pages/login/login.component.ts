@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   template: `
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
+          
           <div class="text-center mb-4">
             <div class="d-inline-flex p-3 rounded-circle bg-primary bg-opacity-10 text-primary mb-3">
               <i class="bi bi-diagram-3-fill fs-1"></i>
             </div>
-            <h2 class="fw-bold">Gestión de Proyectos</h2>
-            <p class="text-muted">Laboratorio de Desarrollo e Investigación</p>
+            <h2 class="fw-bold">Gesti&oacute;n de Proyectos</h2>
+            <p class="text-muted">Laboratorio de Desarrollo e Investigaci&oacute;n</p>
           </div>
 
           <div class="card shadow-sm border-0">
             <div class="card-body p-4 p-sm-5">
-              <h4 class="card-title fw-bold mb-4">Iniciar Sesión</h4>
+              <h4 class="card-title fw-bold mb-4 text-center">Iniciar Sesi&oacute;n</h4>
 
               <div *ngIf="errorMessage" class="alert alert-danger py-2 px-3 small d-flex align-items-center gap-2 mb-3">
                 <i class="bi bi-exclamation-triangle-fill"></i>
@@ -33,16 +34,16 @@ import { AuthService } from '../../core/services/auth.service';
                 <div class="mb-3">
                   <label class="form-label small fw-semibold text-secondary">Correo Institucional</label>
                   <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control border-start-0 ps-0" [(ngModel)]="correo" name="correo" required placeholder="nombre@laboratorio.edu">
+                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                    <input type="email" class="form-control border-start-0 ps-0 bg-light" [(ngModel)]="correo" name="correo" required placeholder="nombre@laboratorio.edu">
                   </div>
                 </div>
 
                 <div class="mb-4">
-                  <label class="form-label small fw-semibold text-secondary">Contraseña</label>
+                  <label class="form-label small fw-semibold text-secondary">Contrase&ntilde;a</label>
                   <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-lock"></i></span>
-                    <input type="password" class="form-control border-start-0 ps-0" [(ngModel)]="password" name="password" required placeholder="••••••••">
+                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+                    <input type="password" class="form-control border-start-0 ps-0 bg-light" [(ngModel)]="password" name="password" required placeholder="Ingresa tu contrase&ntilde;a">
                   </div>
                 </div>
 
@@ -53,22 +54,13 @@ import { AuthService } from '../../core/services/auth.service';
                 </button>
               </form>
 
-              <hr class="my-4">
+              <hr class="my-4 text-muted opacity-25">
 
-              <div>
-                <p class="small text-muted mb-2 text-center fw-semibold">Acceso rápido para demostración:</p>
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <button type="button" class="btn btn-outline-primary btn-sm" (click)="quickLogin('coordinador@laboratorio.edu', 'Admin123!')">
-                    <i class="bi bi-person-badge me-1"></i> Coordinador
-                  </button>
-                  <button type="button" class="btn btn-outline-info text-dark btn-sm" (click)="quickLogin('asesor@laboratorio.edu', 'Asesor123!')">
-                    <i class="bi bi-mortarboard me-1"></i> Asesor
-                  </button>
-                  <button type="button" class="btn btn-outline-success btn-sm" (click)="quickLogin('estudiante@laboratorio.edu', 'Estudiante123!')">
-                    <i class="bi bi-person-workspace me-1"></i> Estudiante
-                  </button>
-                </div>
+              <div class="text-center mb-4 mt-4">
+                <p class="small text-muted mb-1">&iquest;No tienes una cuenta?</p>
+                <a routerLink="/registro" class="btn btn-outline-primary btn-sm fw-semibold w-100 mt-1">Registrarse ahora</a>
               </div>
+              
             </div>
           </div>
         </div>
@@ -96,7 +88,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (!this.correo || !this.password) {
-      this.errorMessage = 'Por favor complete todos los campos';
+      this.errorMessage = 'Por favor ingresa tu correo y contrase\u00f1a.';
       return;
     }
 
@@ -110,7 +102,11 @@ export class LoginComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.errorMessage = err.error?.message || 'Error en las credenciales de acceso';
+        if (err.status === 401 || err.status === 403) {
+           this.errorMessage = 'Correo o contrase\u00f1a incorrectos.';
+        } else {
+           this.errorMessage = err.error?.message || 'Error al intentar acceder.';
+        }
       }
     });
   }
